@@ -1,0 +1,613 @@
+
+
+
+
+
+
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>PHY 102 Interactive Quiz</title>
+  <style>
+    :root{--bg:#0f172a;--card:#111827;--accent:#06b6d4;--muted:#94a3b8;--white:#e6eef6}
+    html,body{height:100%}
+    body{margin:0;font-family:Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;background: #1E1B4B;color:#FFFF;-webkit-font-smoothing:antialiased}
+    .wrap{max-width:920px;margin:28px auto;padding:20px}
+    header{display:flex;align-items:center;gap:16px}
+    h1{margin:0;}
+    .meta{color:var(--muted);font-size:13px}
+    .card{background: #312E81;padding:20px;border-radius:12px;margin-top:18px;box-shadow:0 6px 24px rgba(2,6,23,0.6)}
+    .question{font-size:18px;margin-bottom:12px}
+    .choices{display:flex;flex-direction:column;gap:8px}
+    .choice{background: #4338CA;padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.03);cursor:pointer}
+    .choice:hover{transform:translateY(-2px)}
+    .choice.selected{outline:3px solid rgba(6,182,212,0.12);background: #22D3EE;}
+    .controls{display:flex;justify-content:space-between;align-items:center;margin-top:16px}
+    button{background:#C084FC;color:#042029;border:0;padding:10px 14px;border-radius:8px;cursor:pointer;font-weight:600}
+    button.secondary{background:transparent;border:1px solid rgba(255,255,255,0.06);color:var(--white)}
+    .progress{height:10px;background:rgba(255,255,255,0.04);border-radius:999px;overflow:hidden}
+    .progress > i{display:block;height:100%;background:linear-gradient(90deg,var(--accent),#22D3EE);width:0%}
+    .footer{margin-top:16px;color:var(--muted);font-size:13px}
+    .result{padding:18px;border-radius:10px;background:linear-gradient(180deg, rgba(2,6,23,0.85), rgba(2,6,23,0.6));}
+    .review{margin-top:12px}
+    .q-review{background:rgba(255,255,255,0.02);padding:12px;border-radius:8px;margin-bottom:10px}
+    @media(max-width:560px){.wrap{padding:12px}h1{font-size:18px}.question{font-size:16px}}
+    .timer{ 
+    color:#FBBF24;
+    
+    }
+    .span{
+        display:flex;
+        font-size: 25px ;
+        float:right;
+    }
+    .h1{
+        font-size:25px
+    }
+    
+    
+    
+    body.light-mode{
+  background:#f1f5f9;
+  color:#0f172a;
+}
+body.light-mode .card{background:#ffffff;}
+body.light-mode .choice{background:#e2e8f0;color:#0f172a;}
+body.light-mode .choice.selected{background:#3b82f6;color:white;}
+body.light-mode button{background:#22c55e;color:white;}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div>
+        <h1 class="h1">PHY 102 MCQs Interactive MCQ Quiz PRT1</h1>
+        <div class="meta">56 multiple-choice questions </div>
+ 
+                 <span class="span">Timer: <div class="timer" id="countdown-timer">30:00</div></span>
+      </div>
+    </header><div class="card" id="quiz-card">
+  <div class="progress" aria-hidden><i id="progress-bar"></i></div>
+  <div style="height:14px"></div>
+  <div id="q-area">
+    </div>
+
+  <div class="controls">
+    <div style="display:flex;gap:8px">
+      <button id="prevBtn" class="secondary">Previous</button>
+      <button id="nextBtn">Next</button>
+    </div>
+    <div style="display:flex;align-items:center;gap:8px">
+      <button id="submitBtn" class="secondary">Submit</button>
+      <div style="color:var(--muted);font-size:13px">Q <span id="q-num">1</span> / <span id="q-total">10</span></div>
+    </div>
+  </div>
+
+  <div class="footer">Tip: Select an answer and press Next. You can review answers after submission.Quiz will submit automatically once timer turns zero.</div>
+</div>
+
+<div id="result-area" style="display:none" class="card">
+  <div class="result">
+    <h2 id="score-title"></h2>
+    <p id="score-summary" class="meta"></p>
+  </div>
+  <div class="review" id="review-list"></div>
+  <div style="display:flex;gap:8px;margin-top:12px">
+    <button id="retryBtn">Retake Quiz</button>
+    <button id="exportBtn" class="secondary">Export Results</button>
+  </div>
+</div>
+<br><br><br>
+  <a href="https://wa.me/+2349036795652"><button>Contact The Developer</button></a>
+    <a href="https://wa.me/+2349036795652"><button>Support Project</button></a><br><br>
+   <button onclick="shareOnWhatsApp()">Share Quiz link via WhatsApp</button>
+  <h2>Designed by Sanctum</h2>
+  </div>
+   <script>
+
+
+
+
+
+
+
+const QUESTIONS = [
+
+
+
+
+  // ================= LECTURE 3: CAPACITANCE AND DIELECTRICS =================
+
+  
+  {
+    q: "What is a dielectric?",
+    c: ["A perfect conductor placed between capacitor plates", "Any insulating material such as air, rubber, or another insulator placed between the two conductors of a capacitor", "A type of magnet used in circuits", "A device used to measure current"],
+    a: 1
+  },
+  {
+    q: "Which of the following is NOT one of the three functions served by placing a dielectric between capacitor plates?",
+    c: ["Solving the mechanical problem of maintaining plate separation without contact", "Increasing the maximum possible potential difference between the plates", "Increasing the capacitance compared to a vacuum-filled capacitor", "Decreasing the total charge storage capacity of the capacitor"],
+    a: 3
+  },
+  {
+    q: "What is dielectric breakdown?",
+    c: ["When a dielectric material becomes a perfect conductor permanently", "When an insulating material subjected to a sufficiently large electric field experiences partial ionization, permitting conduction through it", "When a capacitor's plates touch each other", "When the dielectric constant becomes zero"],
+    a: 1
+  },
+  {
+    q: "How does the capacitance of a parallel-plate capacitor change as the cross-sectional area of the plates increases?",
+    c: ["It decreases", "It increases", "It remains unchanged", "It becomes zero"],
+    a: 1
+  },
+  {
+    q: "How does the capacitance of a parallel-plate capacitor change as the separation between the plates increases?",
+    c: ["It increases", "It decreases", "It remains unchanged", "It becomes infinite"],
+    a: 1
+  },
+  {
+    q: "In a series arrangement of capacitors, which of the following is true?",
+    c: ["The same charge flows through all the capacitors", "The same voltage appears across all the capacitors", "The equivalent capacitance is larger than the largest individual capacitance", "The capacitors must all have equal capacitance"],
+    a: 0
+  },
+  {
+    q: "In a parallel arrangement of capacitors, which of the following is true?",
+    c: ["The equivalent capacitance is smaller than the smallest individual capacitance", "The voltage drop across each capacitor is the same", "The same charge flows through each capacitor", "The total charge is the same as on any single capacitor"],
+    a: 1
+  },
+  {
+    q: "How is the equivalent capacitance of capacitors in series characterized, compared to the individual capacitances?",
+    c: ["It is larger than the largest individual capacitance", "It is smaller than the smallest individual capacitance", "It is equal to the sum of the individual capacitances", "It is always equal to zero"],
+    a: 1
+  },
+  // ================= NOTES-1: GAUSS'S LAW, ELECTRIC FIELD, POTENTIAL =================
+
+  {
+    q: "What is an electric dipole?",
+    c: ["A single isolated point charge", "A pair of charges of opposite sign separated by a small distance", "Two charges of the same sign placed far apart", "A charge distributed uniformly over a sphere"],
+    a: 1
+  },
+  {
+    q: "Why must the 'test charge' used to define the electric field at a point be considered small?",
+    c: ["So that it can be seen easily", "So that its presence does not significantly influence the locations of the external charges", "So that it moves faster", "So that it has no mass"],
+    a: 1
+  },
+  {
+    q: "Why is it generally easier to use electric potential energy rather than calculating the work done by the Coulomb force directly?",
+    c: ["Because potential energy depends only on position, unlike force which can be complex to calculate directly", "Because potential energy has no units", "Because force cannot be calculated for point charges", "Because potential energy is always zero"],
+    a: 0
+  },
+  {
+    q: "Which of the following best describes electric potential V?",
+    c: ["A vector quantity closely associated with force", "A scalar quantity representing potential energy per unit charge", "A quantity with the same units as electric field", "A quantity that depends on the test charge used to measure it"],
+    a: 1
+  },
+  {
+    q: "How does electric potential V due to a point charge vary with distance, compared to how the electric field E varies?",
+    c: ["V decreases with distance, while E decreases with the square of distance", "V decreases with the square of distance, while E decreases linearly with distance", "Both V and E decrease with the square of distance", "Both V and E decrease linearly with distance"],
+    a: 0
+  },
+  {
+    q: "When finding the total electric potential due to several point charges, how should the individual potentials be combined?",
+    c: ["They must be added as vectors, taking magnitude and direction into account", "They are added as simple numbers (scalars)", "Only the largest potential is considered", "They must be subtracted from one another"],
+    a: 1
+  },
+  {
+    q: "When finding the total electric field due to several point charges, how should the individual fields be combined?",
+    c: ["They are added as simple numbers", "They must be added as vectors, taking magnitude and direction into account", "Only the nearest charge's field is considered", "They cancel out completely"],
+    a: 1
+  },
+
+  // ================= 28 NEW CALCULATION-BASED QUESTIONS =================
+// ================= LECTURE 1: ADDITIONAL SCENARIO =================
+
+  {
+    q: "Two equal positive charges q1 = q2 = 2 μC are located at x = 0, y = +0.3 m and x = 0, y = -0.3 m. Using r = √(0.4² + 0.3²) = 0.5 m, calculate the magnitude of the force each charge exerts on a third charge Q = 4 μC placed at x = 0.4 m, y = 0 (k = 9×10^9 Nm²/C²).",
+    c: ["0.144 N", "0.216 N", "0.288 N", "0.360 N"],
+    a: 2
+  },
+  {
+    q: "For the same charge arrangement (q1 = q2 = 2 μC at y = ±0.3 m, Q = 4 μC at x = 0.4 m), the vertical (y) components of the two 0.288 N forces cancel by symmetry. Using cosθ = 0.4/0.5, calculate the magnitude of the total (net) electric force on Q along the x-axis.",
+    c: ["0.288 N", "0.346 N", "0.461 N", "0.576 N"],
+    a: 2
+  },
+
+  // ================= CBT EXAM PQ FILE: COULOMB'S LAW / FORCE =================
+
+  {
+    q: "Two charges q1 = 2 μC and q2 = 4 μC are separated by a distance of 0.3 m. Using F = kq1q2/r² (k = 9×10^9 Nm²/C²), find the electrostatic force between them.",
+    c: ["0.4 N", "0.6 N", "0.8 N", "1.2 N"],
+    a: 2
+  },
+  {
+    q: "Two unit charges (1 C each) are separated in air by a distance of 1 m. Using F = kq1q2/r² with k = 9×10^9 Nm²/C², calculate the force exerted between them.",
+    c: ["9 × 10^6 N", "9 × 10^9 N", "9 × 10^3 N", "9 N"],
+    a: 1
+  },
+  {
+    q: "Two charges of 4 μC and 6 μC are separated by 0.3 m. Using F = kq1q2/r², calculate the initial electrostatic force between them.",
+    c: ["1.2 N", "1.8 N", "2.4 N", "3.6 N"],
+    a: 2
+  },
+  {
+    q: "For the same charges (4 μC and 6 μC), if the distance between them is doubled to 0.6 m, use F ∝ 1/r² to calculate the new force.",
+    c: ["0.6 N", "1.2 N", "1.8 N", "2.4 N"],
+    a: 0
+  },
+  {
+    q: "Two charges q1 = 3 μC and q2 = -2 μC are separated by 0.5 m. Using F = kq1q2/r², calculate the magnitude of the electrostatic force between them.",
+    c: ["0.108 N", "0.216 N", "0.324 N", "0.432 N"],
+    a: 1
+  },
+  {
+    q: "Two charges of 2 μC and 3 μC produce an attractive force of 15 N between them. Using r = √(kq1q2/F), calculate the distance separating them.",
+    c: ["0.02 m", "0.06 m", "0.10 m", "0.15 m"],
+    a: 1
+  },
+
+  // ================= CBT EXAM PQ FILE: CAPACITANCE =================
+
+  {
+    q: "A capacitor of capacitance 0.050 μF has a potential difference of 200 V across its plates. Using Q = CV, calculate the charge on each plate.",
+    c: ["5 × 10⁻⁶ C", "1 × 10⁻⁵ C", "2 × 10⁻⁵ C", "1 × 10⁻⁴ C"],
+    a: 1
+  },
+  {
+    q: "A parallel-plate capacitor has plate area A = 2 m² and plate separation d = 0.01 m, with ε₀ = 8.85×10⁻¹² F/m. Using C = ε₀A/d, calculate the capacitance.",
+    c: ["8.85 × 10⁻¹⁰ F", "1.77 × 10⁻⁹ F", "3.54 × 10⁻⁹ F", "1.77 × 10⁻¹⁰ F"],
+    a: 1
+  },
+  {
+    q: "The electric field between the plates of a capacitor is 300 N/C and the plate separation is 0.01 m. Using V = Ed, calculate the potential difference across the plates.",
+    c: ["0.3 V", "3.0 V", "30 V", "300 V"],
+    a: 1
+  },
+  {
+    q: "The electric field between the plates of a capacitor is 200 N/C and the plate separation is 0.02 m. Using V = Ed, calculate the potential difference across the plates.",
+    c: ["1 V", "2 V", "4 V", "8 V"],
+    a: 2
+  },
+  {
+    q: "A capacitor has a plate separation of 0.07 m and an electric field of 300 N/C between the plates. Using V = Ed, calculate the potential difference across the plates.",
+    c: ["10.5 V", "15 V", "21 V", "25.5 V"],
+    a: 2
+  },
+  {
+    q: "A potential difference of 120 V is applied across a capacitor with a plate separation of 3.0 m. Using E = V/d, calculate the electric field intensity between the plates.",
+    c: ["20 N/C", "30 N/C", "40 N/C", "60 N/C"],
+    a: 2
+  },
+  {
+    q: "A capacitor has capacitance 10 μF charged to a potential difference of 50 V. Using Q = CV, calculate the charge stored.",
+    c: ["2 × 10⁻⁴ C", "5 × 10⁻⁴ C", "5 × 10⁻⁵ C", "1 × 10⁻³ C"],
+    a: 1
+  },
+  {
+    q: "A capacitor of 10 nF is charged to a potential difference of 5 V. Using Q = CV, calculate the charge stored on the capacitor.",
+    c: ["2 × 10⁻⁸ C", "5 × 10⁻⁸ C", "5 × 10⁻⁷ C", "2 × 10⁻⁷ C"],
+    a: 1
+  },
+  {
+    q: "Capacitors of 3 μF and 6 μF are connected in series across a 400 V source. Using 1/Ceq = 1/C1 + 1/C2, calculate the equivalent capacitance of the combination.",
+    c: ["1 μF", "2 μF", "4.5 μF", "9 μF"],
+    a: 1
+  },
+  {
+    q: "For the same series combination (3 μF and 6 μF, Ceq = 2 μF) connected to 400 V, using Q = CeqV, calculate the total charge stored on the combination.",
+    c: ["400 μC", "600 μC", "800 μC", "1200 μC"],
+    a: 2
+  },
+  {
+    q: "In the series combination above, the same charge (Q = 800 μC) flows through both capacitors. Using V = Q/C, calculate the potential difference across the 3 μF capacitor.",
+    c: ["133.3 V", "200 V", "266.7 V", "300 V"],
+    a: 2
+  },
+  {
+    q: "Using the potential difference across the 3 μF capacitor (V ≈ 266.7 V) from the series combination, calculate the energy stored in the 3 μF capacitor using E = ½CV².",
+    c: ["0.053 J", "0.107 J", "0.160 J", "0.213 J"],
+    a: 1
+  },
+  {
+    q: "A capacitor has capacitance 300 μF and a potential difference of 1000 V applied to it. Using W = ½CV², calculate the work done (energy stored) in the capacitor.",
+    c: ["100 J", "150 J", "200 J", "300 J"],
+    a: 1
+  },
+
+  // ================= CBT EXAM PQ FILE: ELECTRIC POTENTIAL ENERGY =================
+
+  {
+    q: "Two charges q1 = +3 μC and q2 = -3 μC are separated by a distance of 0.2 m. Using U = kq1q2/r (k = 9×10^9 Nm²/C²), calculate the electric potential energy of the pair.",
+    c: ["-0.203 J", "-0.405 J", "-0.608 J", "-0.810 J"],
+    a: 1
+  },
+
+  // ================= CBT EXAM PQ FILE: GAUSS'S LAW / ELECTRIC FLUX =================
+
+  {
+    q: "A spherical surface of radius 0.5 m encloses a charge Q = 2.0 C. Using Gauss's Law, Φ = Q/ε₀ (ε₀ = 8.85×10⁻¹² F/m), calculate the electric flux through the surface.",
+    c: ["1.13 × 10^11 Nm²/C", "2.26 × 10^11 Nm²/C", "3.39 × 10^11 Nm²/C", "4.52 × 10^11 Nm²/C"],
+    a: 1
+  },
+  {
+    q: "A spherical surface of radius 0.5 m encloses a charge Q = 2.0 μC. Using Φ = Q/ε₀ (ε₀ = 8.85×10⁻¹² F/m), calculate the electric flux through the surface.",
+    c: ["1.13 × 10^5 Nm²/C", "2.26 × 10^5 Nm²/C", "3.39 × 10^5 Nm²/C", "4.52 × 10^5 Nm²/C"],
+    a: 1
+  },
+
+  // ================= CBT EXAM PQ FILE: DC CIRCUITS / RESISTORS / POWER =================
+
+  {
+    q: "Two resistors, 16 Ω and 8 Ω, are connected in series across a 12 V battery. Using the voltage divider V = I×R with I = V_total/Rtotal, calculate the voltage across the 16 Ω resistor.",
+    c: ["4 V", "6 V", "8 V", "10 V"],
+    a: 2
+  },
+  {
+    q: "For the same series circuit (16 Ω and 8 Ω resistors, 12 V battery), calculate the voltage across the 8 Ω resistor.",
+    c: ["2 V", "4 V", "6 V", "8 V"],
+    a: 1
+  },
+  {
+    q: "An electric heater has resistance R = 11 Ω and is connected to a 220 V AC source for 2 seconds. Using P = V²/R, calculate the power dissipated.",
+    c: ["2200 W", "4400 W", "8800 W", "440 W"],
+    a: 1
+  },
+  {
+    q: "Using the power dissipated by the 11 Ω heater at 220 V (P = 4400 W) over a time of 2 seconds, calculate the electrical energy consumed using E = Pt.",
+    c: ["2200 J", "4400 J", "8800 J", "17,600 J"],
+    a: 2
+
+  },
+
+  // ================= 84 NEW NON-CALCULATION / CONCEPTUAL QUESTIONS =================
+// ================= LECTURE 1: ATOMIC STRUCTURE & CHARGE =================
+
+  {
+    q: "Which of the following correctly lists the four fundamental forces of nature?",
+    c: ["Gravity, electromagnetism, strong nuclear force, weak nuclear force", "Gravity, friction, tension, normal force", "Electromagnetism, gravity, magnetism, static force", "Strong force, weak force, gravity, air resistance"],
+    a: 0
+  },
+  {
+    q: "According to the structure of the atom, where are protons and neutrons located?",
+    c: ["In the electron cloud", "In the shells", "In the nucleus", "Outside the atom"],
+    a: 2
+  },
+  {
+    q: "What is the charge of a neutron?",
+    c: ["Positive", "Negative", "Zero", "Variable"],
+    a: 2
+  },
+  {
+    q: "Which statement correctly describes the principle of conservation of charge?",
+    c: ["Charge can be created but not destroyed", "Charge can be destroyed but not created", "Charge can neither be created nor destroyed, only transferred", "Charge is destroyed when a body is grounded"],
+    a: 2
+  },
+  {
+    q: "Which of the following is a conductor, permitting the easy movement of charge through it?",
+    c: ["Wood", "Copper", "Silicon at room temperature", "Rubber"],
+    a: 1
+  },
+  {
+    q: "What best describes a semiconductor such as silicon?",
+    c: ["It always conducts electricity as well as a metal", "It acts as an insulator at room temperature but can be made conductive by adding a dopant", "It cannot conduct electricity under any condition", "It is a perfect conductor at low temperatures only"],
+    a: 1
+  },
+  {
+    q: "According to Coulomb's Law, the electric force between two point charges is directly proportional to what?",
+    c: ["The distance between them", "The square of the distance between them", "The product of the charges", "The sum of the charges"],
+    a: 2
+  },
+  {
+    q: "According to Coulomb's Law, how does the electric force between two point charges relate to the distance between them?",
+    c: ["Directly proportional to distance", "Directly proportional to the square of the distance", "Inversely proportional to the square of the distance", "Independent of distance"],
+    a: 2
+  },
+  {
+    q: "When two charges have the same sign (both positive or both negative), what is the nature of the force between them?",
+    c: ["Attractive", "Repulsive", "Zero", "Rotational"],
+    a: 1
+  },
+  {
+    q: "When two charges have opposite signs, what is the nature of the force between them?",
+    c: ["Attractive", "Repulsive", "Zero", "Rotational"],
+    a: 0
+  },
+  {
+    q: "In which direction does the electric field produced by a positive point charge point?",
+    c: ["Toward the charge", "Away from the charge", "Perpendicular to the charge", "It has no defined direction"],
+    a: 1
+  },
+  {
+    q: "In which direction does the electric field produced by a negative point charge point?",
+    c: ["Toward the charge", "Away from the charge", "Perpendicular to the charge", "It has no defined direction"],
+    a: 0
+  },
+  {
+    q: "What is the SI unit of electric field?",
+    c: ["Coulomb", "Volt", "Newton per Coulomb (N/C)", "Joule"],
+    a: 2
+  },
+  ];
+  
+  
+  
+  
+  
+  
+  
+  
+  
+
+function shareOnWhatsApp() {
+  const message = "https://generalhealthandwellness.com/category/questions-interactive-quiz-guide";
+  const encodedMessage = encodeURIComponent(message);
+  const whatsappUrl = "whatsapp://send?text=" + encodedMessage;
+  window.open(whatsappUrl, '_blank');
+}
+
+let state = { idx: 0, answers: Array(QUESTIONS.length).fill(null) };
+const total = QUESTIONS.length;
+
+function renderQuestion() {
+  const area = document.getElementById('q-area');
+  const q = QUESTIONS[state.idx];
+  document.getElementById('q-num').textContent = state.idx + 1;
+  document.getElementById('q-total').textContent = total;
+  const progress = Math.round((state.idx / total) * 100);
+  document.getElementById('progress-bar').style.width = progress + '%';
+
+  area.innerHTML = '';
+  const qEl = document.createElement('div');
+  qEl.innerHTML = `<div class="question">${state.idx + 1}. ${q.q}</div>`;
+  const choices = document.createElement('div');
+  choices.className = 'choices';
+
+  q.c.forEach((choice, i) => {
+    const btn = document.createElement('div');
+    btn.className = 'choice';
+    btn.textContent = String.fromCharCode(65 + i) + '. ' + choice;
+    if (state.answers[state.idx] === i) btn.classList.add('selected');
+
+    btn.addEventListener('click', () => {
+      state.answers[state.idx] = i;
+      document.querySelectorAll('.choice').forEach(el => el.classList.remove('selected'));
+      btn.classList.add('selected');
+    });
+
+    choices.appendChild(btn);
+  });
+
+  qEl.appendChild(choices);
+  area.appendChild(qEl);
+}
+
+document.getElementById('nextBtn').addEventListener('click', () => {
+  if (state.idx < total - 1) state.idx++;
+  renderQuestion();
+});
+
+document.getElementById('prevBtn').addEventListener('click', () => {
+  if (state.idx > 0) state.idx--;
+  renderQuestion();
+});
+
+document.getElementById('submitBtn').addEventListener('click', () => {
+  const unanswered = state.answers.filter(a => a === null).length;
+  if (unanswered > 0) {
+    if (!confirm(`You have ${unanswered} unanswered questions. Submit anyway?`)) return;
+  }
+  gradeQuiz();
+});
+
+function gradeQuiz() {
+  clearInterval(timerInterval); // stop timer
+
+  let correct = 0;
+  const review = [];
+
+  for (let i = 0; i < total; i++) {
+    const user = state.answers[i];
+    const correctIdx = QUESTIONS[i].a;
+    const ok = user === correctIdx;
+    if (ok) correct++;
+    review.push({ i, q: QUESTIONS[i].q, choices: QUESTIONS[i].c, user, correctIdx, ok });
+  }
+
+  showResult(correct, review);
+}
+
+function showResult(score, review) {
+  document.getElementById('quiz-card').style.display = 'none';
+  const area = document.getElementById('result-area');
+  area.style.display = 'block';
+
+  document.getElementById('score-title').textContent = `You scored ${score} out of ${total}`;
+  const pct = Math.round((score / total) * 100);
+  document.getElementById('score-summary').textContent = `Percentage: ${pct}%`;
+
+  const list = document.getElementById('review-list');
+  list.innerHTML = '';
+
+  review.forEach(item => {
+    const div = document.createElement('div');
+    div.className = 'q-review';
+    const head = document.createElement('div');
+    head.style.fontWeight = '700';
+    head.textContent = `${item.i + 1}. ${item.q}`;
+    const userAns = document.createElement('div');
+    const ua = item.user === null ? 'No answer' : String.fromCharCode(65 + item.user) + '. ' + item.choices[item.user];
+    const ca = String.fromCharCode(65 + item.correctIdx) + '. ' + item.choices[item.correctIdx];
+    userAns.innerHTML = `<div><strong>Your answer:</strong> ${ua}</div><div><strong>Correct:</strong> ${ca}</div>`;
+    userAns.style.color = item.ok ? 'lightgreen' : '#fca5a5';
+    div.appendChild(head);
+    div.appendChild(userAns);
+    list.appendChild(div);
+  });
+}
+
+/* ---------------- TIMER ---------------- */
+let totalSeconds = 30* 60; 
+const countdownEl = document.getElementById('countdown-timer');
+let timerInterval = null;
+let warned = false;
+
+//  Warning sound
+function playWarningSound() {
+  const ctx = new (window.AudioContext || window.webkitAudioContext)();
+  const osc = ctx.createOscillator();
+  osc.type = "sine";
+  osc.frequency.setValueAtTime(800, ctx.currentTime);
+  osc.connect(ctx.destination);
+  osc.start();
+  osc.stop(ctx.currentTime + 0.5);
+}
+
+function startCountdown() {
+  timerInterval = setInterval(() => {
+    let mins = Math.floor(totalSeconds / 60);
+    let secs = totalSeconds % 60;
+    countdownEl.textContent = `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+    totalSeconds--;
+
+    if (totalSeconds === 300 && !warned) { // 5 minutes left
+      playWarningSound();
+      alert("⚠️ 5 minutes remaining!");
+      warned = true;
+    }
+
+    if (totalSeconds < 0) {
+      clearInterval(timerInterval);
+      gradeQuiz();
+    }
+  }, 1000);
+}
+
+/* ---------------- LIGHT MODE ---------------- */
+const toggleBtn = document.createElement("button");
+toggleBtn.textContent = "☀️";
+toggleBtn.style.marginLeft = "10px";
+document.querySelector("header").appendChild(toggleBtn);
+
+toggleBtn.addEventListener("click", () => {
+  document.body.classList.toggle("light-mode");
+});
+
+/* Reset */
+document.getElementById('retryBtn')?.addEventListener('click', () => {
+  state = { idx: 0, answers: Array(total).fill(null) };
+  document.getElementById('result-area').style.display = 'none';
+  document.getElementById('quiz-card').style.display = 'block';
+  totalSeconds = 45 * 60;
+  warned = false;
+  renderQuestion();
+  startCountdown();
+});
+
+renderQuestion();
+window.addEventListener('load', startCountdown);
+</script>
+      
+</body>
+</html>
+
